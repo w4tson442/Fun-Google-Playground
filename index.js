@@ -12,13 +12,20 @@
 //3. 
 
 function gmail_submit(){ /* submit button goes here */
-
+    console.log("test");
+    $.ajax({
+        type: "GET",
+        url: "index.py",
+        data: { email: "email" },
+        success: gmail_final(resopnse)
+    });
+    console.log("test");
 }
 
 function gmail_validate(){ /* validate gmail */
 
 }
 
-function gmail_final(){ /* goes to the backend for python to send to the GoogleAPI */
-
+function gmail_final(response){ /* goes to the backend for python to send to the GoogleAPI */
+    console.log(response);
 }

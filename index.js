@@ -16,8 +16,8 @@ function gmail_submit(){ /* submit button goes here */
     $.ajax({
         type: "GET",
         url: "index.py",
-        data: { email: "email" },
-        success: gmail_final(resopnse)
+        data: { email: "example@gmail.com" },
+        success: gmail_final
     });
     console.log("test");
 }

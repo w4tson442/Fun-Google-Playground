@@ -15,14 +15,7 @@ def getAuthorization():
     form = cgi.FieldStorage()
     email = str(form['email'].value)
 
-    output = open("test.txt", "w")
-    output.write(email)
-    output.close()
-
-    if email == "email":
-        return "success really"
-    return "success"
-
+    print('success')
 
 def main():
     getAuthorization()

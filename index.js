@@ -12,18 +12,27 @@
 //3. 
 
 function gmail_submit(){ /* submit button goes here */
-    console.log("test");
-    $.ajax({
-        type: "GET",
-        url: "index.py",
-        data: { email: "example@gmail.com" },
-        success: gmail_final
-    });
-    console.log("test");
+
+    var gmail = document.getElementById("gmail").value
+
+    if(gmail_validate(gmail) == false){
+        alert('Something Wrong with Your Input')
+    }
+    else{
+        $.ajax({
+            type: "GET",
+            url: "index.py",
+            data: { email: gmail },
+            success: function(data){
+                gmail_final(data)
+            }
+        });
+    }
 }
 
-function gmail_validate(){ /* validate gmail */
-
+function gmail_validate(email){ /* validate gmail */
+    var email_check  = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/
+    return email_check.test(email)
 }
 
 function gmail_final(response){ /* goes to the backend for python to send to the GoogleAPI */

@@ -17,5 +17,5 @@
 
 ---
 
-**original creator: ** Justin Ichiro Toyomitsu  
+**original creator:** Justin Ichiro Toyomitsu  
 **email:** ichitsurume@gmail.com

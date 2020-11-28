@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 import os
+import secrets
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -19,13 +20,27 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
+def generate_secret_key (filepath):
+    secret_file = open(filepath, "w")
+    secret = "SECRET_KEY= " + "\""+ str(secrets.token_urlsafe()) + "\"" + "\n"
+    secret_file.write(secret)
+    secret_file.close()
+
+try:
+    from .secret_key import SECRET_KEY
+except ModuleNotFoundError:
+
+    SETTINGS_DIR = os.path.abspath(os.path.dirname(__file__))
+    generate_secret_key(os.path.join(SETTINGS_DIR, 'secret_key.py'))
+    from .secret_key import SECRET_KEY
+
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = '^b*z=9*5)a119ke9!in6uh7r@afgeb6#%!#%d0rr#uy28h(2ud'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 
 
 # Application definition

@@ -10,6 +10,10 @@ pip3 install Django
 sudo apt-get install -y libmysqlclient-dev
 sudo apt-get install -y libssl-dev
 pip3 install mysqlclient
+
+./manage.py makemigrations
+./manage.py migrate
+echo yes | ./manage.py collectstatic
 deactivate
 
 sudo rm /etc/apache2/sites-available/000-default.conf

@@ -35,7 +35,7 @@ except ModuleNotFoundError:
     from .secret_key import SECRET_KEY
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '^b*z=9*5)a119ke9!in6uh7r@afgeb6#%!#%d0rr#uy28h(2ud'
+# SECRET_KEY = '^b*z=9*5)a119ke9!in6uh7r@afgeb6#%!#%d0rr#uy28h(2ud'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True

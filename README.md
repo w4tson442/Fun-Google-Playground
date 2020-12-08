@@ -17,5 +17,11 @@
 
 ---
 
+### Good To Know Commands
+1. Create One Super User(website admin) (Can manually create ONLY one)
+``` ./manage.py createsuperuser ```  
+``` ./manage.py collectstatic ```
+
+---
 **original creator:** Justin Ichiro Toyomitsu  
 **email:** ichitsurume@gmail.com

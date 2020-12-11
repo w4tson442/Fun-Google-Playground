@@ -1,0 +1,23 @@
+{# ----------------------------------------------------------------------------------------
+Django Example Code Block
+{% if latest_question_list %}
+    <ul>
+    {% for question in latest_question_list %}
+        <li><a href="/polls/{{ question.id }}/">{{ question.question_text }}</a></li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No polls are available.</p>
+{% endif %}
+---------------------------------------------------------------------------------------- #} 
+
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+    <div>
+        <button type="button" onclick="gmail_submit()">submit</button>
+        <input type="text" id="gmail" placeholder="{{ place_holder }}"></input>
+    </div>
+    <script src="index.js"></script>
+</body>

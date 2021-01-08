@@ -1,8 +1,12 @@
+import os
+from pathlib import Path
 from django.http import HttpResponse
 from django.template import loader
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from .models import Email
 from .forms import GmailForm
+import google.oauth2.credentials
+import google_auth_oauthlib.flow
 
 # =========================================================================
 
@@ -45,12 +49,41 @@ def send(request):
             # ...
             # redirect to a new URL:
             email = form.cleaned_data['email']
-            return HttpResponse('Thanks! ' + str(email))
+            auth_url = askGoogle(str(email));
+            return redirect(auth_url);
 
     # if a GET (or any other method) we'll create a blank form
     else:
         form = GmailForm()
     return HttpResponse("hello")
+
+#GET Concent Screen Url
+# return: authorization_url
+# check: state
+#reference link: https://developers.google.com/identity/protocols/oauth2/web-server#python_1
+def askGoogle(email):
+    CLIENT_SECRET = os.path.join(os.path.dirname(__file__), 'client_secret.json')
+    SCOPES = ['https://www.googleapis.com/auth/documents.readonly']
+
+    flow = google_auth_oauthlib.flow.Flow.from_client_secrets_file(
+        str(CLIENT_SECRET),
+        SCOPES,
+    )
+
+    flow.redirect_uri = 'http:8080/front'
+
+    authorization_url, state = flow.authorization_url(
+        access_type='offline', prompt='consent', login_hint=email,
+    include_granted_scopes='true')
+
+    return authorization_url
+
+#DeBug Purpose 
+def printFile(file_name, contents):
+    TEST_OUTPUT = os.path.join(os.path.dirname(__file__), file_name)
+    f = open(TEST_OUTPUT, "w")
+    f.write(contents)
+    f.close()
 
 # =========================================================================
 

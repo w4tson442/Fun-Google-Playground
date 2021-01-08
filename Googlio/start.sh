@@ -7,6 +7,7 @@ sudo mysql -e "flush privileges;"
 virtualenv project_env
 source project_env/bin/activate
 pip3 install Django
+pip3 install --upgrade google-api-python-client google-auth-httplib2 google-auth-oauthlib
 sudo apt-get install -y libmysqlclient-dev
 sudo apt-get install -y libssl-dev
 pip3 install mysqlclient

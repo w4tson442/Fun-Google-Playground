@@ -17,7 +17,7 @@ Django Example Code Block
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 <body>
-<form action="{% url 'front:send' }" method="post">
+<form action="{% url 'front:send' %}" method="post">
     {% csrf_token %}
     {{ form }}
     <input type="submit" value="Submit">

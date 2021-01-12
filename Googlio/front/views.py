@@ -70,7 +70,7 @@ def askGoogle(email):
         SCOPES,
     )
 
-    flow.redirect_uri = 'http:8080/front'
+    flow.redirect_uri = 'http://127.0.0.1:8080/front/'
 
     authorization_url, state = flow.authorization_url(
         access_type='offline', prompt='consent', login_hint=email,

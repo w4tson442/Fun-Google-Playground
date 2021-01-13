@@ -70,13 +70,25 @@ def askGoogle(email):
         SCOPES,
     )
 
-    flow.redirect_uri = 'http://127.0.0.1:8080/front/'
+    flow.redirect_uri = 'http://127.0.0.1:8080/front/tyGoogle'
 
     authorization_url, state = flow.authorization_url(
         access_type='offline', prompt='consent', login_hint=email,
     include_granted_scopes='true')
 
     return authorization_url
+
+#Return Url function
+def tyGoogle(response):
+    auth_code = ''
+    if response.method == 'GET':
+        query_body = response.GET
+        if 'code' in query_body:
+            auth_code = query_body.get('code')
+
+    print_this = str(query_body) + ' | ' + str(auth_code)
+    printFile('test_test.txt', print_this)
+    return redirect('google.com')
 
 #DeBug Purpose 
 def printFile(file_name, contents):

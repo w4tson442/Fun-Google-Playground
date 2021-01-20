@@ -139,3 +139,8 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, "static/")
+
+#SETTING GOOGLE API related parameters
+CLIENT_SECRET = os.path.join(BASE_DIR, 'client_secret.json')
+SCOPES = ['https://www.googleapis.com/auth/documents.readonly']
+REDIRECT_URI = 'http://127.0.0.1:8080/front/tyGoogle'

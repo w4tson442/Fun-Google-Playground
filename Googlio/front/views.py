@@ -3,6 +3,7 @@ from pathlib import Path
 from django.http import HttpResponse
 from django.template import loader
 from django.shortcuts import render, redirect
+from django.conf import settings
 from .models import Email
 from .forms import GmailForm
 import google.oauth2.credentials
@@ -30,13 +31,6 @@ def index(request):
     }
     return HttpResponse(template.render(context, request))
 
-#main dashbard
-def dashboard(request, question_id):
-    context = {
-        'User' : '0'
-    }
-    return render(request, 'front/index.html', context)
-
 #GET REQUEST
 def send(request):
     # if this is a POST request we need to process the form data
@@ -62,15 +56,11 @@ def send(request):
 # check: state
 #reference link: https://developers.google.com/identity/protocols/oauth2/web-server#python_1
 def askGoogle(email):
-    CLIENT_SECRET = os.path.join(os.path.dirname(__file__), 'client_secret.json')
-    SCOPES = ['https://www.googleapis.com/auth/documents.readonly']
-
     flow = google_auth_oauthlib.flow.Flow.from_client_secrets_file(
-        str(CLIENT_SECRET),
-        SCOPES,
+        str(settings.CLIENT_SECRET),
+        settings.SCOPES,
     )
-
-    flow.redirect_uri = 'http://127.0.0.1:8080/front/tyGoogle'
+    flow.redirect_uri = settings.REDIRECT_URI
 
     authorization_url, state = flow.authorization_url(
         access_type='offline', prompt='consent', login_hint=email,
@@ -85,10 +75,34 @@ def tyGoogle(response):
         query_body = response.GET
         if 'code' in query_body:
             auth_code = query_body.get('code')
+        access_token = getGoogleAccess(query_body)
+        printFile('test_test.txt', 'access_token is: ' + str(access_token))
 
-    print_this = str(query_body) + ' | ' + str(auth_code)
-    printFile('test_test.txt', print_this)
-    return redirect('google.com')
+    return dashboard(response, auth_code)
+
+def getGoogleAccess(query_body):
+    state = query_body.get('state')
+    access_token = ''
+    flow = google_auth_oauthlib.flow.Flow.from_client_secrets_file(
+        str(settings.CLIENT_SECRET),
+        settings.SCOPES,
+    state=state)
+
+    flow.redirect_uri = settings.REDIRECT_URI
+
+
+    flow.fetch_token(code=query_body.get('code'))
+    credentials = flow.credentials
+    access_token = str(credentials.token)
+
+    return access_token
+
+#Use code recieved from tyGoogle to get all context
+def dashboard(response, code):
+    context = {
+        'User' : '0'
+    }
+    return render(response, 'front/dashboard.html', context) 
 
 #DeBug Purpose 
 def printFile(file_name, contents):

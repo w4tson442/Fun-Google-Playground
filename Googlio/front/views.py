@@ -6,6 +6,7 @@ from django.shortcuts import render, redirect
 from django.conf import settings
 from .models import Email
 from .forms import GmailForm
+from googleapiclient.discovery import build
 import google.oauth2.credentials
 import google_auth_oauthlib.flow
 
@@ -73,13 +74,14 @@ def tyGoogle(response):
             flow = getFlow()
             flow.fetch_token(code=query_body.get('code'))
             credentials = flow.credentials
-            access_token = str(credentials.token)
-            printFile('test_access_token.txt', 'access_token: ' + str(access_token))
 
-    return dashboard(response)
+    return dashboard(response, credentials)
 
 #Use code recieved from tyGoogle to get all context
-def dashboard(response):
+def dashboard(response, credentials):
+    drive = build('drive', 'v2', credentials=credentials)
+    files = drive.files().list().execute()
+    printFile('test_test.txt', str(files))
     context = {
         'User' : '0'
     }

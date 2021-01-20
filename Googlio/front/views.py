@@ -1,5 +1,6 @@
 import os
 from pathlib import Path
+from datetime import datetime
 from django.http import HttpResponse
 from django.template import loader
 from django.shortcuts import render, redirect
@@ -79,13 +80,30 @@ def tyGoogle(response):
 
 #Use code recieved from tyGoogle to get all context
 def dashboard(response, credentials):
+    formatted_files = getDriveFiles(credentials)
+    context = {
+        'formatted_files' : formatted_files
+    }
+    return render(response, 'front/dashboard.html', context)
+
+def getDriveFiles(credentials):
     drive = build('drive', 'v2', credentials=credentials)
     files = drive.files().list().execute()
-    printFile('test_test.txt', str(files))
-    context = {
-        'User' : '0'
-    }
-    return render(response, 'front/dashboard.html', context) 
+    formatted_files = []
+    if 'items' in files:
+        for doc in files['items']:
+           newItem = {
+                   'id' : doc['id'],
+                   'title' : doc['title'],
+                   'createdDate' : formatDate(doc['createdDate']),
+                   'modifiedDate' : formatDate(doc['modifiedDate']),
+           }
+           formatted_files.append(newItem)
+    return formatted_files
+
+def formatDate(date):
+    newDate = datetime.strptime(date,"%Y-%m-%dT%H:%M:%S.%fZ").date()
+    return str(newDate)
 
 #DeBug Purpose 
 def printFile(file_name, contents):

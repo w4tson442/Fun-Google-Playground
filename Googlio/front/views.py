@@ -56,11 +56,7 @@ def send(request):
 # check: state
 #reference link: https://developers.google.com/identity/protocols/oauth2/web-server#python_1
 def askGoogle(email):
-    flow = google_auth_oauthlib.flow.Flow.from_client_secrets_file(
-        str(settings.CLIENT_SECRET),
-        settings.SCOPES,
-    )
-    flow.redirect_uri = settings.REDIRECT_URI
+    flow = getFlow()
 
     authorization_url, state = flow.authorization_url(
         access_type='offline', prompt='consent', login_hint=email,
@@ -70,35 +66,20 @@ def askGoogle(email):
 
 #Return Url function
 def tyGoogle(response):
-    auth_code = ''
     if response.method == 'GET':
         query_body = response.GET
         if 'code' in query_body:
-            auth_code = query_body.get('code')
-        access_token = getGoogleAccess(query_body)
-        printFile('test_test.txt', 'access_token is: ' + str(access_token))
+            access_token = ''
+            flow = getFlow()
+            flow.fetch_token(code=query_body.get('code'))
+            credentials = flow.credentials
+            access_token = str(credentials.token)
+            printFile('test_access_token.txt', 'access_token: ' + str(access_token))
 
-    return dashboard(response, auth_code)
-
-def getGoogleAccess(query_body):
-    state = query_body.get('state')
-    access_token = ''
-    flow = google_auth_oauthlib.flow.Flow.from_client_secrets_file(
-        str(settings.CLIENT_SECRET),
-        settings.SCOPES,
-    state=state)
-
-    flow.redirect_uri = settings.REDIRECT_URI
-
-
-    flow.fetch_token(code=query_body.get('code'))
-    credentials = flow.credentials
-    access_token = str(credentials.token)
-
-    return access_token
+    return dashboard(response)
 
 #Use code recieved from tyGoogle to get all context
-def dashboard(response, code):
+def dashboard(response):
     context = {
         'User' : '0'
     }
@@ -110,6 +91,14 @@ def printFile(file_name, contents):
     f = open(TEST_OUTPUT, "w")
     f.write(contents)
     f.close()
+
+def getFlow():
+    flow = google_auth_oauthlib.flow.Flow.from_client_secrets_file(
+        str(settings.CLIENT_SECRET),
+        settings.SCOPES,
+    )
+    flow.redirect_uri = settings.REDIRECT_URI
+    return flow
 
 # =========================================================================
 

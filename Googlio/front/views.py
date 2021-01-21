@@ -95,6 +95,7 @@ def getDriveFiles(credentials):
            newItem = {
                    'id' : doc['id'],
                    'title' : doc['title'],
+                   'embedLink' : doc['embedLink'],
                    'createdDate' : formatDate(doc['createdDate']),
                    'modifiedDate' : formatDate(doc['modifiedDate']),
            }

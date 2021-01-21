@@ -8,7 +8,7 @@
     {% if formatted_files %}
         {% for doc in formatted_files %}
         <div class="card text-white bg-info mb-3" style="width: 18rem;">
-            <img class="card-img-top" src="..." alt="Card image cap">
+                <iframe class="card-img-top embed-responsive-item" src="{{doc.embedLink}}" allowfullscreen></iframe>
             <div class="card-body">
                 <h5 class="card-title">{{doc.title}}</h5>
                 <p class="card-text">Created Date: {{doc.createdDate}}</p>

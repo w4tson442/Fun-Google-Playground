@@ -146,5 +146,6 @@ SCOPES = [
     'https://www.googleapis.com/auth/drive.file',
     'https://www.googleapis.com/auth/drive.metadata.readonly',
     'https://www.googleapis.com/auth/documents.readonly',
+    'https://www.googleapis.com/auth/drive.photos.readonly',
 ]
 REDIRECT_URI = 'http://127.0.0.1:8080/front/tyGoogle'

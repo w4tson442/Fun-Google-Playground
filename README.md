@@ -20,10 +20,10 @@ python3, pip3, Django, virtualenv
 ---
 
 ### Good To Know Commands
-1. Get Started on the application by going to the start.sh script and run the script by:
+1. Get Started on the application by going to the start.sh script and run the script by:   
 ``` source start.sh ```
-2. Create One Super User(website admin) (Can manually create ONLY one)
-``` ./manage.py createsuperuser ```  
+2. Create One Super User(website admin) (Can manually create ONLY one)   
+``` ./manage.py createsuperuser ```   
 ``` ./manage.py collectstatic ```
 
 ---

@@ -142,6 +142,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, "static/")
 
 #SETTING GOOGLE API related parameters
 CLIENT_SECRET = os.path.join(BASE_DIR, 'client_secret.json')
+CLIENT_ID = '681462915368-dvk5h3eo2l8qcak9r584ohedu4qmitk7.apps.googleusercontent.com'
 SCOPES = [
     'https://www.googleapis.com/auth/drive.file',
     'https://www.googleapis.com/auth/drive.metadata.readonly',

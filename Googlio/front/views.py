@@ -1,4 +1,5 @@
 import os
+import json
 from pathlib import Path
 from datetime import datetime
 from django.http import HttpResponse
@@ -45,7 +46,7 @@ def send(request):
             # ...
             # redirect to a new URL:
             email = form.cleaned_data['email']
-            auth_url = askGoogle(str(email));
+            auth_url = askGoogle(request, str(email));
             return redirect(auth_url);
 
     # if a GET (or any other method) we'll create a blank form
@@ -57,7 +58,14 @@ def send(request):
 # return: authorization_url
 # check: state
 #reference link: https://developers.google.com/identity/protocols/oauth2/web-server#python_1
-def askGoogle(email):
+def askGoogle(request, email):
+    request.session['email'] = email
+    try:
+        email_model = Email.objects.get(gmail=email)
+    except:
+        email_model = Email(gmail=email)
+        email_model.save()
+
     flow = getFlow()
 
     authorization_url, state = flow.authorization_url(
@@ -67,24 +75,26 @@ def askGoogle(email):
     return authorization_url
 
 #Return Url function
-def tyGoogle(response):
-    if response.method == 'GET':
-        query_body = response.GET
+def tyGoogle(request):
+    if request.method == 'GET':
+        query_body = request.GET
         if 'code' in query_body:
             access_token = ''
             flow = getFlow()
             flow.fetch_token(code=query_body.get('code'))
             credentials = flow.credentials
+            saveCred(request.session.get('email'), credentials)
 
-    return dashboard(response, credentials)
+    return dashboard(request)
 
 #Use code recieved from tyGoogle to get all context
-def dashboard(response, credentials):
+def dashboard(request):
+    credentials = getCred(request.session.get('email'))
     formatted_files = getDriveFiles(credentials)
     context = {
         'formatted_files' : formatted_files
     }
-    return render(response, 'front/dashboard.html', context)
+    return render(request, 'front/dashboard.html', context)
 
 def getDriveFiles(credentials):
     drive = build('drive', 'v2', credentials=credentials)
@@ -102,11 +112,35 @@ def getDriveFiles(credentials):
            formatted_files.append(newItem)
     return formatted_files
 
+# =========================================================================
+#HP(helper)
+
+#convert str -> dict -> google.credential object
+def getCred(email):
+    email_model = Email.objects.get(gmail=email)
+    cred = google.oauth2.credentials.Credentials(
+          email_model.token,
+          refresh_token = email_model.refresh_token,
+          token_uri = email_model.token_uri,
+          client_id = settings.CLIENT_ID,
+          client_secret = email_model.client_secret,
+          scopes = settings.SCOPES,
+    )
+    return cred
+
+def saveCred(email, credentials):
+    email_model = Email.objects.get(gmail=email)
+    email_model.token = credentials.token
+    email_model.refresh_token = credentials.refresh_token
+    email_model.token_uri = credentials.token_uri
+    email_model.client_secret = credentials.client_secret
+    email_model.save()
+
 def formatDate(date):
     newDate = datetime.strptime(date,"%Y-%m-%dT%H:%M:%S.%fZ").date()
     return str(newDate)
 
-#DeBug Purpose 
+#DeBug Purpose
 def printFile(file_name, contents):
     TEST_OUTPUT = os.path.join(os.path.dirname(__file__), file_name)
     f = open(TEST_OUTPUT, "w")
@@ -120,12 +154,3 @@ def getFlow():
     )
     flow.redirect_uri = settings.REDIRECT_URI
     return flow
-
-# =========================================================================
-
-#HP(helper)
-#saves a gmail to the database
-#1. check to see if the username exists
-#2. if it does update instead of creating an new one
-def saveGmail():
-    return "test test"  

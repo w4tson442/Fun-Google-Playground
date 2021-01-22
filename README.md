@@ -9,9 +9,10 @@
 2. (Jan 21st, 2021) (Jan 21st, 2021) (JustinT) (Saving User Credentials w/o login)
 3. (-- -- ----) (-- -- ----) (----- -----) (Complete index page UI)
 4. (-- -- ----) (-- -- ----) (----- -----) (Complete dashboard page UI)
-- (-- -- ----) (-- -- ----) (----- -----) (Google Doc Section UI)
-- (-- -- ----) (-- -- ----) (----- -----) (Gmail Section UI)
-- (-- -- ----) (-- -- ----) (----- -----) (Google Calendar UI)
+5. (-- -- ----) (-- -- ----) (----- -----) (Google Doc Section UI)
+6. (-- -- ----) (-- -- ----) (----- -----) (Gmail Section UI)
+7. (-- -- ----) (-- -- ----) (----- -----) (Google Calendar UI)
+8. (-- -- ----) (-- -- ----) (----- -----) (Revoke button, users who don't want their info saved)
 ---
 
 ### What Libraries/Instilation You Need:

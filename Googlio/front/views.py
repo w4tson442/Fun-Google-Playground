@@ -46,8 +46,12 @@ def send(request):
             # ...
             # redirect to a new URL:
             email = form.cleaned_data['email']
-            auth_url = askGoogle(request, str(email));
-            return redirect(auth_url);
+            if Email.objects.filter(gmail=email).exists():
+                email_model = Email.objects.get(gmail=email)
+                return redirect('/front/dashboard/')
+            else:
+                auth_url = askGoogle(request, str(email))
+                return redirect(auth_url)
 
     # if a GET (or any other method) we'll create a blank form
     else:
@@ -85,7 +89,7 @@ def tyGoogle(request):
             credentials = flow.credentials
             saveCred(request.session.get('email'), credentials)
 
-    return dashboard(request)
+    return redirect('/front/dashboard/')
 
 #Use code recieved from tyGoogle to get all context
 def dashboard(request):
@@ -114,6 +118,8 @@ def getDriveFiles(credentials):
 
 # =========================================================================
 #HP(helper)
+#help Links:
+# 1. https://developers.google.com/identity/protocols/oauth2/web-server#python_1
 
 #convert str -> dict -> google.credential object
 def getCred(email):

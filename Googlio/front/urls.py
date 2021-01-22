@@ -8,4 +8,5 @@ urlpatterns = [
     path('', views.index, name='index'),
     path('send/', views.send, name='send'),
     path('tyGoogle/', views.tyGoogle, name='tyGoogle'),
+    path('dashboard/', views.dashboard, name='dashboard'),
 ]

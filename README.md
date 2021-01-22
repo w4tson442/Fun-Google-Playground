@@ -5,8 +5,8 @@
 ---
 ### To-Do List:
 ###### example: (Create Date) (Finish Date) (By Who) (Detail of Assignment)
-1. (Nov 27th, 2020) (Jan 21st, 2020) (Justin Toyomitsu) (Getting Access Token/Refresh, Data, Bootstrap, and document preview working)
-2. (-- -- ----) (-- -- ----) (----- -----) (Saving User Credentials w/o login)
+1. (Nov 27th, 2020) (Jan 21st, 2021) (JustinT) (Getting Access Token/Refresh, Data, Bootstrap, and document preview working)
+2. (Jan 21st, 2021) (Jan 21st, 2021) (JustinT) (Saving User Credentials w/o login)
 3. (-- -- ----) (-- -- ----) (----- -----) (Complete index page UI)
 4. (-- -- ----) (-- -- ----) (----- -----) (Complete dashboard page UI)
 - (-- -- ----) (-- -- ----) (----- -----) (Google Doc Section UI)

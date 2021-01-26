@@ -94,7 +94,11 @@ def tyGoogle(request):
 #Use code recieved from tyGoogle to get all context
 def dashboard(request):
     credentials = getCred(request.session.get('email'))
-    formatted_files = getDriveFiles(credentials)
+    try: #sometimes the scope changes and everything changes which sucks 
+        formatted_files = getDriveFiles(credentials)
+    except:
+        auth_url = askGoogle(request, request.session.get('email'))
+        return redirect(auth_url)
     context = {
         'formatted_files' : formatted_files
     }

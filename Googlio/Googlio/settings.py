@@ -144,6 +144,9 @@ STATIC_ROOT = os.path.join(BASE_DIR, "static/")
 CLIENT_SECRET = os.path.join(BASE_DIR, 'client_secret.json')
 CLIENT_ID = '681462915368-dvk5h3eo2l8qcak9r584ohedu4qmitk7.apps.googleusercontent.com'
 SCOPES = [
+    'openid',
+    'https://www.googleapis.com/auth/userinfo.profile',
+    'https://www.googleapis.com/auth/userinfo.email',
     'https://www.googleapis.com/auth/drive.file',
     'https://www.googleapis.com/auth/drive.metadata.readonly',
     'https://www.googleapis.com/auth/documents.readonly',

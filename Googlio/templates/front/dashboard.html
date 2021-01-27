@@ -1,28 +1,50 @@
 <!doctype html>
 <html lang="en">
 <head>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- jquery bootstrap -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!-- bootstrap javascript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <!-- reference dashboard.css 'static/front/css/dashboard.css' -->
+    {% load static %}
+    <link rel="stylesheet"  href="{% static 'front/css/dashboard.css' %}"></script>
+    <!-- reference dashboard.js 'static/front/js/dashboard.js' -->
+    <script src="{% static 'front/js/dashboard.js' %}"></script>
 </head>
 <body>
-    {% if formatted_files %}
-        {% for doc in formatted_files %}
-        <div class="card text-white bg-info mb-3" style="width: 18rem;">
-                <iframe class="card-img-top embed-responsive-item" src="{{doc.embedLink}}" allowfullscreen></iframe>
-            <div class="card-body">
-                <h5 class="card-title">{{doc.title}}</h5>
-                <p class="card-text">Created Date: {{doc.createdDate}}</p>
-                <p class="card-text">Modified Date: {{doc.modifiedDate}}</p>
-                <a href="#" class="btn btn-primary">Go somewhere</a>
-            </div>
+    <div class="m-3 p-2" style="border: 2px solid black;">
+      <!-- NAV BAR -->
+      <nav>
+        <div class="nav nav-tabs" id="nav-tab" role="tablist">
+          <a class="nav-item nav-link active" id="nav-gmail-tab" data-toggle="tab" href="#nav-gmail" role="tab" aria-controls="nav-gmail" aria-selected="true">Gmail</a>
+          <a class="nav-item nav-link" id="nav-cal-tab" data-toggle="tab" href="#nav-cal" role="tab" aria-controls="nav-cal" aria-selected="false">Calendar</a>
+          <a class="nav-item nav-link" id="nav-doc-tab" data-toggle="tab" href="#nav-doc" role="tab" aria-controls="nav-doc" aria-selected="false">Document</a>
         </div>
-        {% endfor %}
-    {% else %}
-    <h1> No Documents Available </h1>
-    {% endif %}
+      </nav>
+      <!-- NAV BAR CONTENTS -->
+      <div class="tab-content" id="nav-tabContent">
+        <div class="tab-pane fade show active" id="nav-gmail" role="tabpanel" aria-labelledby="nav-gmail-tab">hello</div>
+        <div class="tab-pane fade" id="nav-cal" role="tabpanel" aria-labelledby="nav-cal-tab">eh</div>
+        <div class="tab-pane fade" id="nav-doc" role="tabpanel" aria-labelledby="nav-doc-tab">
+          {% if formatted_files %}
+          {% for doc in formatted_files %}
+          <div class="card text-white bg-info mb-3" style="width: 18rem;">
+            <iframe class="card-img-top embed-responsive-item" src="{{doc.embedLink}}" allowfullscreen></iframe>
+            <div class="card-body">
+              <h5 class="card-title">{{doc.title}}</h5>
+              <p class="card-text">Created Date: {{doc.createdDate}}</p>
+              <p class="card-text">Modified Date: {{doc.modifiedDate}}</p>
+              <a href="#" class="btn btn-primary">Go somewhere</a>
+            </div>
+          </div>
+          {% endfor %}
+          {% else %}
+          <h1> No Documents Available </h1>
+          {% endif %}
+        </div>
+      </div>
+    </div>
 </body>
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </html>

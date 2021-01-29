@@ -12,8 +12,6 @@
     <!-- reference dashboard.css 'static/front/css/dashboard.css' -->
     {% load static %}
     <link rel="stylesheet"  href="{% static 'front/css/dashboard.css' %}"></script>
-    <!-- reference dashboard.js 'static/front/js/dashboard.js' -->
-    <script src="{% static 'front/js/dashboard.js' %}"></script>
 </head>
 <body>
     <div class="m-3 p-2" style="border: 2px solid black;">
@@ -54,15 +52,20 @@
               {% endif %}
             </div>
             <div class="card-body text-secondary">
-              <h5 class="card-title">{{doc.title}}</h5>
-              <p class="card-text">created: {{doc.createdDate}}</p>
-              <p class="card-text">modified: {{doc.modifiedDate}}</p>
-              <p class="card-text">Last Modified By</p>
-              <div class="row">
-                <p class="card-text">{{doc.lm_displayName}}</p>
-                <p class="card-text">{{doc.lm_emailAddress}}</p>
-              </div>
-              <a href="#" class="btn btn-primary">Show Preview</a>
+              <h5 class="card-title cut-short">{{doc.title}}</h5>
+              <details> 
+                <summary class="lastm">More Details</summary>
+                <p class="card-text">Created</p>
+                <p class="card-text lastm">{{doc.createdDate}}</p>
+                <p class="card-text">Last Modified</p>
+                <p class="card-text lastm">{{doc.modifiedDate}}</p>
+                <p class="card-text lastm">{{doc.lm_displayName}}</p>
+                <p class="card-text lastm">{{doc.lm_emailAddress}}</p>
+              </details>
+              <!-- Button trigger modal -->
+              <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#preview_modal" data-link="{{doc.embedLink}}">
+                View Preview
+              </button>
             </div>
           </div>
           </div>
@@ -77,5 +80,19 @@
       </div>
       <!-- NAV BAR CONTENTS(END) -->
     </div>
+    <!-- Modal Initialized -->
+    <div class="modal fade" id="preview_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <!-- 1:1 aspect ratio -->
+          <div class="embed-responsive embed-responsive-1by1">
+            <iframe id="preview_page" class="embed-responsive-item" src=""></iframe>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- End of Modal -->
+    <!-- reference dashboard.js 'static/front/js/dashboard.js' -->
+    <script src="{% static 'front/js/dashboard.js' %}"></script>
 </body>
 </html>

@@ -7,3 +7,17 @@
     float: left;
     margin-right: 3px;
 }
+
+.card-body p {
+    margin-bottom: 0px;
+}
+
+.lastm {
+    font-size: 12px;
+}
+
+.cut-short {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}

@@ -9,7 +9,7 @@
 2. (Jan 21st, 2021) (Jan 21st, 2021) (JustinT) (Saving User Credentials w/o login)
 3. (Jan 22nd, 2021) (Jan 22nd, 2021) (JustinT) (Complete index page UI)
 4. (-- -- ----) (-- -- ----) (----- -----) (Complete dashboard page UI)
-5. (-- -- ----) (-- -- ----) (----- -----) (Google Doc Section UI)
+5. (Jan 24th, 2021) (Jan 29th, 2021) (JustinT) (Google Doc Section UI)
 6. (-- -- ----) (-- -- ----) (----- -----) (Gmail Section UI)
 7. (-- -- ----) (-- -- ----) (----- -----) (Google Calendar UI)
 8. (-- -- ----) (-- -- ----) (----- -----) (Revoke button, users who don't want their info saved)

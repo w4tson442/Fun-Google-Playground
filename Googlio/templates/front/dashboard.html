@@ -53,17 +53,17 @@
             </div>
             <div class="card-body text-secondary">
               <h5 class="card-title cut-short">{{doc.title}}</h5>
-              <details> 
+              <details class="mb-2">
                 <summary class="lastm">More Details</summary>
                 <p class="card-text">Created</p>
-                <p class="card-text lastm">{{doc.createdDate}}</p>
+                <p class="card-text lastm text-primary">{{doc.createdDate}}</p>
                 <p class="card-text">Last Modified</p>
-                <p class="card-text lastm">{{doc.modifiedDate}}</p>
-                <p class="card-text lastm">{{doc.lm_displayName}}</p>
-                <p class="card-text lastm">{{doc.lm_emailAddress}}</p>
+                <p class="card-text lastm text-primary">{{doc.modifiedDate}}</p>
+                <p class="card-text lastm text-primary">{{doc.lm_displayName}}</p>
+                <p class="card-text lastm text-primary">{{doc.lm_emailAddress}}</p>
               </details>
               <!-- Button trigger modal -->
-              <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#preview_modal" data-link="{{doc.embedLink}}">
+              <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#preview_modal" style="font-size:13px" data-link="{{doc.embedLink}}">
                 View Preview
               </button>
             </div>

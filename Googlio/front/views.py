@@ -104,16 +104,28 @@ def dashboard(request):
     }
     return render(request, 'front/dashboard.html', context)
 
+#reference: https://developers.google.com/drive/api/v2/reference/files
 def getDriveFiles(credentials):
     drive = build('drive', 'v2', credentials=credentials)
     files = drive.files().list().execute()
     formatted_files = []
     if 'items' in files:
         for doc in files['items']:
+           if 'lastModifyingUser' in doc:
+               emailAddress = doc['lastModifyingUser']['emailAddress']
+               displayName = doc['lastModifyingUser']['displayName']
+           else:
+               emailAddress = 'no email'
+               displayName = 'unavailable'
            newItem = {
                    'id' : doc['id'],
                    'title' : doc['title'],
+                   'shared' : doc['shared'],
+                   'iconLink' : doc['iconLink'],
+                   'viewed' : doc['labels']['viewed'],
                    'embedLink' : doc['embedLink'],
+                   'lm_emailAddress' : emailAddress,
+                   'lm_displayName' : displayName,
                    'createdDate' : formatDate(doc['createdDate']),
                    'modifiedDate' : formatDate(doc['modifiedDate']),
            }

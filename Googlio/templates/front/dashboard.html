@@ -7,6 +7,8 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <!-- bootstrap javascript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <!-- bootstrap font css -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
     <!-- reference dashboard.css 'static/front/css/dashboard.css' -->
     {% load static %}
     <link rel="stylesheet"  href="{% static 'front/css/dashboard.css' %}"></script>
@@ -31,17 +33,35 @@
         <div class="mt-3 tab-pane fade" id="nav-cal" role="tabpanel" aria-labelledby="nav-cal-tab">eh</div>
         <!-- Documents -->
         <div class="mt-3 tab-pane fade" id="nav-doc" role="tabpanel" aria-labelledby="nav-doc-tab">
-          <div class="container">
+          <div class="container text-center">
           {% if formatted_files %}
           <div class="row">
           {% for doc in formatted_files %}
           <div class="col-md-6 col-lg-4 col-xl-3 py-2">
-          <div class="card h-100 text-white bg-info">
+          <div class="card h-100 bg-light border-info">
             <!-- <img class="card-img-top" src="{{doc.embedLink}}" alt="Card image cap"> -->
-            <div class="card-body">
+            <div class="card-header">
+              <img src="{{doc.iconLink}}" alt="type of file">
+              {% if doc.viewed %}
+              <i class="bi bi-eye text-success"></i>
+              {% else %}
+              <i class="bi bi-eye-slash text-danger"></i>
+              {% endif %}
+              {% if doc.shared %}
+              <i class="bi bi-person-check text-success"></i>
+              {% else %}
+              <i class="bi bi-person-x text-danger"></i>
+              {% endif %}
+            </div>
+            <div class="card-body text-secondary">
               <h5 class="card-title">{{doc.title}}</h5>
-              <p class="card-text">Created Date: {{doc.createdDate}}</p>
-              <p class="card-text">Modified Date: {{doc.modifiedDate}}</p>
+              <p class="card-text">created: {{doc.createdDate}}</p>
+              <p class="card-text">modified: {{doc.modifiedDate}}</p>
+              <p class="card-text">Last Modified By</p>
+              <div class="row">
+                <p class="card-text">{{doc.lm_displayName}}</p>
+                <p class="card-text">{{doc.lm_emailAddress}}</p>
+              </div>
               <a href="#" class="btn btn-primary">Show Preview</a>
             </div>
           </div>

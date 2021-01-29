@@ -1,0 +1,9 @@
+.card-header img {
+    float: right;
+    margin-top: 5px;
+}
+
+.card-header i {
+    float: left;
+    margin-right: 3px;
+}

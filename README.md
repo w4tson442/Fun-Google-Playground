@@ -2,6 +2,9 @@
 
 ##### Mission is to create a user friendly dashboard for gmail users. This dashboard will give a overview of their notifications, related documents, graphs, etc that are accessible from singular location.
 
+Login       |  Dashboard
+:-------------------:|:-------------------------:
+![alt text](https://github.com/w4tson442/Fun-Google-Playground/blob/main/display_image/Login_Screen.png)  |  ![alt text](https://github.com/w4tson442/Fun-Google-Playground/blob/main/display_image/Google_Doc_example.png)
 ---
 ### To-Do List:
 ###### example: (Create Date) (Finish Date) (By Who) (Detail of Assignment)

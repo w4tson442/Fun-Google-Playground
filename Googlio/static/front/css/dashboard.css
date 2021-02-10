@@ -1,3 +1,7 @@
+body {
+    background-image: url("/static/front/img/Confetti-Doodles.svg");
+}
+
 .card-header img {
     float: right;
     margin-top: 5px;

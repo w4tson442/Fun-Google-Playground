@@ -14,10 +14,10 @@
     <link rel="stylesheet"  href="{% static 'front/css/dashboard.css' %}"></script>
 </head>
 <body>
-    <div class="m-3 p-2" style="border: 2px solid black;">
+    <div class="m-3 p-2">
       <!-- NAV BAR -->
       <nav>
-        <div class="nav nav-tabs" id="nav-tab" role="tablist">
+        <div class="nav nav-tabs justify-content-center font-weight-bold navbar-light bg-light" id="nav-tab" role="tablist">
           <a class="nav-item nav-link active" id="nav-gmail-tab" data-toggle="tab" href="#nav-gmail" role="tab" aria-controls="nav-gmail" aria-selected="true">Gmail</a>
           <a class="nav-item nav-link" id="nav-cal-tab" data-toggle="tab" href="#nav-cal" role="tab" aria-controls="nav-cal" aria-selected="false">Calendar</a>
           <a class="nav-item nav-link" id="nav-doc-tab" data-toggle="tab" href="#nav-doc" role="tab" aria-controls="nav-doc" aria-selected="false">Document</a>
@@ -36,7 +36,7 @@
           <div class="row">
           {% for doc in formatted_files %}
           <div class="col-md-6 col-lg-4 col-xl-3 py-2">
-          <div class="card h-100 bg-light border-info">
+          <div class="card h-100 bg-light border-white">
             <!-- <img class="card-img-top" src="{{doc.embedLink}}" alt="Card image cap"> -->
             <div class="card-header">
               <img src="{{doc.iconLink}}" alt="type of file">

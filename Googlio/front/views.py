@@ -96,13 +96,33 @@ def dashboard(request):
     credentials = getCred(request.session.get('email'))
     try: #sometimes the scope changes and everything changes which sucks 
         formatted_files = getDriveFiles(credentials)
+        formatted_gmails = getUserEmail(credentials)
     except:
         auth_url = askGoogle(request, request.session.get('email'))
         return redirect(auth_url)
     context = {
-        'formatted_files' : formatted_files
+        'formatted_files'  : formatted_files,
+        'formatted_gmails' : formatted_gmails,
     }
     return render(request, 'front/dashboard.html', context)
+
+#https://developers.google.com/gmail/api/reference/rest/v1/users.messages/list
+def getUserEmail(credentials):
+    gmail = build('gmail', 'v1', credentials=credentials)
+    emails = gmail.users().messages().list(
+            maxResults=10,
+            userId='me',
+            includeSpamTrash=False,
+    ).execute()
+    formatted_gmails = []
+    for email  in emails['messages']:
+        new_email = gmail.users().messages().get(
+                userId='me',
+                id=email['id'],
+        ).execute()
+        new_email = getHeaders(new_email['payload']['headers'])
+        formatted_gmails.append(new_email)
+    return formatted_gmails
 
 #reference: https://developers.google.com/drive/api/v2/reference/files
 def getDriveFiles(credentials):
@@ -157,6 +177,16 @@ def saveCred(email, credentials):
     email_model.token_uri = credentials.token_uri
     email_model.client_secret = credentials.client_secret
     email_model.save()
+
+#get information of each unread emails
+#https://developers.google.com/gmail/api/reference/rest/v1/users.messages/get
+def getHeaders(headers):
+    list_attr = ['Subject', 'From', 'To']
+    result = {}
+    for header in headers:
+        if header['name'] in list_attr:
+            result[header['name']] = header['value']
+    return result
 
 def formatDate(date):
     newDate = datetime.strptime(date,"%Y-%m-%dT%H:%M:%S.%fZ").date()

@@ -1,7 +1,7 @@
 import os
 import json
+import datetime
 from pathlib import Path
-from datetime import datetime
 from django.http import HttpResponse
 from django.template import loader
 from django.shortcuts import render, redirect
@@ -93,7 +93,11 @@ def tyGoogle(request):
 
 #Use code recieved from tyGoogle to get all context
 def dashboard(request):
-    credentials = getCred(request.session.get('email'))
+    try:
+        credentials = getCred(request.session.get('email'))
+    except:
+        return redirect('/front/')
+
     try: #sometimes the scope changes and everything changes which sucks 
         formatted_files = getDriveFiles(credentials)
         formatted_gmails = getUserEmail(credentials)
@@ -106,12 +110,14 @@ def dashboard(request):
     }
     return render(request, 'front/dashboard.html', context)
 
-#https://developers.google.com/gmail/api/reference/rest/v1/users.messages/list
+#reference:https://developers.google.com/gmail/api/reference/rest/v1/users.messages/list
+#reference:https://support.google.com/mail/answer/7190
 def getUserEmail(credentials):
     gmail = build('gmail', 'v1', credentials=credentials)
     emails = gmail.users().messages().list(
-            maxResults=10,
+            maxResults=30,
             userId='me',
+            q='is:unread AND NOT label:promotions AND NOT label:social',
             includeSpamTrash=False,
     ).execute()
     formatted_gmails = []
@@ -120,7 +126,7 @@ def getUserEmail(credentials):
                 userId='me',
                 id=email['id'],
         ).execute()
-        new_email = getHeaders(new_email['payload']['headers'])
+        new_email = getInfo(new_email)
         formatted_gmails.append(new_email)
     return formatted_gmails
 
@@ -180,16 +186,22 @@ def saveCred(email, credentials):
 
 #get information of each unread emails
 #https://developers.google.com/gmail/api/reference/rest/v1/users.messages/get
-def getHeaders(headers):
+def getInfo(new_email):
     list_attr = ['Subject', 'From', 'To']
     result = {}
+    result['internalDate'] = formatDate(int(new_email['internalDate']), 2)
+    headers = new_email['payload']['headers']
     for header in headers:
         if header['name'] in list_attr:
             result[header['name']] = header['value']
     return result
 
-def formatDate(date):
-    newDate = datetime.strptime(date,"%Y-%m-%dT%H:%M:%S.%fZ").date()
+#reference: https://www.delftstack.com/howto/python/python-convert-epoch-to-datetime/
+def formatDate(date, case=1):
+    if case == 1:
+        newDate = datetime.datetime.strptime(date,"%Y-%m-%dT%H:%M:%S.%fZ").date()
+    elif case == 2:
+        newDate = datetime.datetime.fromtimestamp(date/1000).strftime('%A, %B %-d, %Y %I:%M %p')
     return str(newDate)
 
 #DeBug Purpose

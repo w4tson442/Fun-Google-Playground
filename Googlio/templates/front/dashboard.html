@@ -30,12 +30,20 @@
           <div class="container">
           {% if formatted_gmails %}
           {% for gmail in formatted_gmails %}
-          <div class="card h-30 mb-3 bg-light border-white">
-              <div class="card-body text-secondary">
-                <h5 class="card-title cut-short">{{gmail.Subject}}</h5>
-                <p class="card-text lastm"><b>From:</b> {{gmail.From}} <b>To:</b> {{gmail.To}}</p>
+            <div class="card h-20 mb-3 bg-light border-white">
+              <div class="card-body text-secondary text-center" style="padding:0.5rem !important;">
+                <p class="card-text">{{gmail.internalDate}}</p>
+                <h5 class="card-title cut-short">"{{gmail.Subject}}"</h5>
+                <details class="mb-2">
+                <summary class="lastm">More Details</summary>
+                <p class="card-text text-truncate">
+                    <b>From:</b> {{gmail.From}}
+                    <i class="bi bi-arrow-right-circle text-primary"></i>
+                    <b>To:</b> {{gmail.To}}
+                </p>
+              </details>
               </div>
-          </div>
+            </div>
           {% endfor %}
           {% endif %}
           </div>

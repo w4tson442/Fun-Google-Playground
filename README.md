@@ -5,18 +5,13 @@
 Login       |  Dashboard
 :-------------------:|:-------------------------:
 ![alt text](https://github.com/w4tson442/Fun-Google-Playground/blob/main/display_image/Login_Screen.png)  |  ![alt text](https://github.com/w4tson442/Fun-Google-Playground/blob/main/display_image/Google_Doc_example.png)
+
+Gmail      |  Calendar
+:-------------------:|:-------------------------:
+ ![alt text](https://github.com/w4tson442/Fun-Google-Playground/blob/main/display_image/Google_Gmail_example.png) | 
+ 
 ---
-### To-Do List:
-###### example: (Create Date) (Finish Date) (By Who) (Detail of Assignment)
-1. (Nov 27th, 2020) (Jan 21st, 2021) (JustinT) (Getting Access Token/Refresh, Data, Bootstrap, and document preview working)
-2. (Jan 21st, 2021) (Jan 21st, 2021) (JustinT) (Saving User Credentials w/o login)
-3. (Jan 22nd, 2021) (Jan 22nd, 2021) (JustinT) (Complete index page UI)
-4. (-- -- ----) (-- -- ----) (----- -----) (Complete dashboard page UI)
-5. (Jan 24th, 2021) (Jan 29th, 2021) (JustinT) (Google Doc Section UI)
-6. (-- -- ----) (-- -- ----) (----- -----) (Gmail Section UI)
-7. (-- -- ----) (-- -- ----) (----- -----) (Google Calendar UI)
-8. (-- -- ----) (-- -- ----) (----- -----) (Revoke button, users who don't want their info saved)
----
+
 
 ### What Libraries/Instilation You Need:
 python3, pip3, Django, virtualenv

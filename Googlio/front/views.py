@@ -5,9 +5,12 @@ from pathlib import Path
 from django.http import HttpResponse
 from django.template import loader
 from django.shortcuts import render, redirect
+from django.utils.safestring import mark_safe
 from django.conf import settings
 from .models import Email
+from .models import Event
 from .forms import GmailForm
+from .utils import Calendar
 from googleapiclient.discovery import build
 import google.oauth2.credentials
 import google_auth_oauthlib.flow
@@ -98,6 +101,7 @@ def dashboard(request):
     except:
         return redirect('/front/')
 
+    calendar = getCalendar(request.GET.get('day', None))
     try: #sometimes the scope changes and everything changes which sucks 
         formatted_files = getDriveFiles(credentials)
         formatted_gmails = getUserEmail(credentials)
@@ -107,8 +111,23 @@ def dashboard(request):
     context = {
         'formatted_files'  : formatted_files,
         'formatted_gmails' : formatted_gmails,
+        'calendar'         : mark_safe(calendar),
     }
     return render(request, 'front/dashboard.html', context)
+
+#reference: https://www.huiwenteo.com/normal/2018/07/24/django-calendar.html
+def getCalendar(date):
+    # use today's date for the calendar
+    d = get_date(date)
+
+    # Instantiate our calendar class with today's year and date
+    cal = Calendar(d.year, d.month)
+
+    # Call the formatmonth method, which returns our calendar as a table
+    html_cal = cal.formatmonth(withyear=True)
+
+    calendar = html_cal
+    return calendar
 
 #reference:https://developers.google.com/gmail/api/reference/rest/v1/users.messages/list
 #reference:https://support.google.com/mail/answer/7190
@@ -195,6 +214,12 @@ def getInfo(new_email):
         if header['name'] in list_attr:
             result[header['name']] = header['value']
     return result
+
+def get_date(req_day):
+    if req_day:
+        year, month = (int(x) for x in req_day.split('-'))
+        return date(year, month, day=1)
+    return datetime.datetime.today()
 
 #reference: https://www.delftstack.com/howto/python/python-convert-epoch-to-datetime/
 def formatDate(date, case=1):

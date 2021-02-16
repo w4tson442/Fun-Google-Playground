@@ -11,3 +11,8 @@ class Email(models.Model):
     create_date = models.DateTimeField('Create Date', auto_now_add=True)
     last_updated = models.DateTimeField('Last Updated', auto_now=True)
 
+class Event(models.Model):
+    title = models.CharField(max_length=200)
+    description = models.TextField()
+    start_time = models.DateTimeField()
+    end_time = models.DateTimeField()

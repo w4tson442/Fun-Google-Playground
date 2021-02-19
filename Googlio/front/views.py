@@ -1,6 +1,8 @@
 import os
 import json
 import datetime
+import calendar
+from tzlocal import get_localzone
 from pathlib import Path
 from django.http import HttpResponse
 from django.template import loader
@@ -101,10 +103,11 @@ def dashboard(request):
     except:
         return redirect('/front/')
 
-    calendar = getCalendar(request.GET.get('day', None))
+    getEvents(credentials)
     try: #sometimes the scope changes and everything changes which sucks 
         formatted_files = getDriveFiles(credentials)
         formatted_gmails = getUserEmail(credentials)
+        calendar = getCalendar(request.GET.get('day', None))
     except:
         auth_url = askGoogle(request, request.session.get('email'))
         return redirect(auth_url)
@@ -114,6 +117,61 @@ def dashboard(request):
         'calendar'         : mark_safe(calendar),
     }
     return render(request, 'front/dashboard.html', context)
+
+#reference: https://developers.google.com/calendar/v3/reference/events/list#examples
+def getEvents(credentials):
+    service = build('calendar', 'v3', credentials=credentials)
+    calendarList = service.calendarList().list().execute()
+
+    #get first calendar
+    cal_choice = {}
+    cal_choice[calendarList['items'][0]['id']] = calendarList['items'][0]['summary']
+
+    #get year and month
+    year = datetime.datetime.now().year
+    month = datetime.datetime.now().month
+    #generate dates for first day and last day
+    fday = str(year) + "-" + str(month) +   "-1"
+    lday = str(year) + "-" + str(month+1) + "-1"
+
+    timeMin = datetime.datetime.strptime(fday, "%Y-%m-%d").astimezone(get_localzone()).isoformat()
+    timeMax = datetime.datetime.strptime(lday, "%Y-%m-%d").astimezone(get_localzone()).isoformat()
+
+    eventList = service.events().list(
+            calendarId='primary',
+            timeMin=timeMin,
+            timeMax=timeMax,
+    ).execute()
+
+    for event in eventList['items']:
+        #check if event exists with google_id
+        try:
+            event_model = Event.objects.get(google_id=event['id'])
+        except:
+            event_model = Event(google_id=event['id'])
+
+        #if etag doesn't exist or is outdated
+        # !Tried to save dates as isoformat but it is hard
+        printFile('test.txt', json.dumps(event))
+        if event_model.google_etag != event['etag']:
+            if 'description' in event:
+                event_model.description = event['description']
+
+            if 'colorId' in event:
+                event_model.colorId = getEventColor(event['colorId'])
+            else:
+                event_model.colorId = getEventColor(0)
+
+            if 'dateTime' in event['start']:
+                event_model.start_time  = event['start']['dateTime']
+                event_model.end_time    = event['end']['dateTime']
+            else:
+                event_model.start_time  = event['start']['date']
+                event_model.end_time    = event['end']['date']
+
+            event_model.google_etag = event['etag']
+            event_model.title       = event['summary']
+            event_model.save()
 
 #reference: https://www.huiwenteo.com/normal/2018/07/24/django-calendar.html
 def getCalendar(date):
@@ -243,3 +301,24 @@ def getFlow():
     )
     flow.redirect_uri = settings.REDIRECT_URI
     return flow
+
+#reference: https://lukeboyle.com/blog-posts/2016/04/google-calendar-api---color-id
+def getEventColor(colorId = 0):
+    ref = {
+        0  : '#039be5',
+        1  : '#7986cb',
+        2  : '#33b679',
+        3  : '#8e24aa',
+        4  : '#e67c73',
+        5  : '#f6c026',
+        6  : '#f5511d',
+        7  : '#039be5',
+        8  : '#616161',
+        9  : '#3f51b5',
+        10 : '#0b8043',
+        11 : '#d60000',
+    }
+    if int(colorId) >= 0 and int(colorId) <= 11:
+        return ref[int(colorId)]
+    else:
+        return ref[0]

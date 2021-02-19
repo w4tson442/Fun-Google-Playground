@@ -123,6 +123,9 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/3.1/topics/i18n/
 
+#DATETIME_FORMAT = '%Y-%m-%dT%H:%M:%SZ'
+# also change LN10N to False for it to work
+
 LANGUAGE_CODE = 'en-us'
 
 TIME_ZONE = 'UTC'
@@ -152,5 +155,7 @@ SCOPES = [
     'https://www.googleapis.com/auth/drive.metadata.readonly',
     'https://www.googleapis.com/auth/documents.readonly',
     'https://www.googleapis.com/auth/drive.photos.readonly',
+    'https://www.googleapis.com/auth/calendar.readonly',
+    'https://www.googleapis.com/auth/calendar.events.readonly',
 ]
 REDIRECT_URI = 'http://127.0.0.1:8080/front/tyGoogle'

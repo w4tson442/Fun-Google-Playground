@@ -11,6 +11,7 @@ pip3 install --upgrade google-api-python-client google-auth-httplib2 google-auth
 sudo apt-get install -y libmysqlclient-dev
 sudo apt-get install -y libssl-dev
 pip3 install mysqlclient
+pip3 install tzlocal
 
 ./manage.py makemigrations
 ./manage.py migrate

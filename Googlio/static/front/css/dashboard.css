@@ -33,7 +33,8 @@ body {
 }
 
 .calendar tr, .calendar td {
-  border: 1px solid black;
+  border: 3px solid grey;
+  border-style: inset;
 }
 
 .calendar th {

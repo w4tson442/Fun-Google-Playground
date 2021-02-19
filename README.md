@@ -1,6 +1,6 @@
 # Googlio! A Fun Google Playground Dashboard!  
 
-##### Mission is to create a user friendly dashboard for gmail users. This dashboard will give a overview of their notifications, related documents, graphs, etc that are accessible from singular location.
+##### Mission is to create a user friendly dashboard for gmail users. This dashboard will give a overview of their calendar events, recent documents, and emails!
 
 Login       |  Dashboard
 :-------------------:|:-------------------------:
@@ -8,14 +8,15 @@ Login       |  Dashboard
 
 Gmail      |  Calendar
 :-------------------:|:-------------------------:
- ![alt text](https://github.com/w4tson442/Fun-Google-Playground/blob/main/display_image/Google_Gmail_example.png) | 
+ ![alt text](https://github.com/w4tson442/Fun-Google-Playground/blob/main/display_image/Google_Gmail_example.png) | ![alt text](https://github.com/w4tson442/Fun-Google-Playground/blob/main/display_image/Google_Calendar_example.png)
+
  
 ---
 
 
 ### What Libraries/Instilation You Need:
-python3, pip3, Django, virtualenv
-
+1. Apache / MySQL
+2. VM/ or Webserver to host on (ex. [isekai](https://github.com/w4tson442/isekai)
 ---
 
 ### Good To Know Commands

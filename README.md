@@ -1,4 +1,4 @@
-# Googlio! A Fun Google Playground Dashboard!  
+# Googlio! Quick Web App with Django, Python, and Google API  
 
 ##### Mission is to create a user friendly dashboard for gmail users. This dashboard will give a overview of their calendar events, recent documents, and emails!
 

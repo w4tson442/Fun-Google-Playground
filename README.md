@@ -2,7 +2,7 @@
   Googlio
 </h1>
 <p align="center">
-  Google Information Dashboard of Google Doc, Google Calendar and Gmail built with <a href="https://www.djangoproject.com" target="_blank">django</a>, <a href="https://www.python.org/" target="_blank">Python</a> and <a href="https://console.developers.google.com" target="_blank">Google API</a>
+  Google Information Dashboard of Google Doc, Google Calendar and Gmail built with <a href="https://www.djangoproject.com" target="_blank">Django</a>, <a href="https://www.python.org/" target="_blank">Python</a> and <a href="https://console.developers.google.com" target="_blank">Google API</a>
 </p>
 
 ![demo](https://github.com/w4tson442/Fun-Google-Playground/blob/main/display_image/Login_Screen.png)

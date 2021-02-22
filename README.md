@@ -1,33 +1,31 @@
-# Googlio! Quick Web App with Django, Python, and Google API  
+<h1 align="center">
+  Googlio
+</h1>
+<p align="center">
+  Google Information Dashboard of Google Doc, Google Calendar and Gmail built with <a href="https://www.djangoproject.com" target="_blank">django</a>, <a href="https://www.python.org/" target="_blank">Python</a> and <a href="https://console.developers.google.com" target="_blank">Google API</a>
+</p>
 
-##### Mission is to create a user friendly dashboard for gmail users. This dashboard will give a overview of their calendar events, recent documents, and emails!
+![demo](https://github.com/w4tson442/Fun-Google-Playground/blob/main/display_image/Login_Screen.png)
+![demo](https://github.com/w4tson442/Fun-Google-Playground/blob/main/display_image/Google_Doc_example.png)
+![demo](https://github.com/w4tson442/Fun-Google-Playground/blob/main/display_image/Google_Gmail_example.png)
+![demo](https://github.com/w4tson442/Fun-Google-Playground/blob/main/display_image/Google_Calendar_example.png)
 
-Login       |  Dashboard
-:-------------------:|:-------------------------:
-![alt text](https://github.com/w4tson442/Fun-Google-Playground/blob/main/display_image/Login_Screen.png)  |  ![alt text](https://github.com/w4tson442/Fun-Google-Playground/blob/main/display_image/Google_Doc_example.png)
+## :runner: SET UP
+1. This project works with [Apache](https://httpd.apache.org/) and [MYSQL](https://www.mysql.com/) I recommend using my [VM](https://github.com/w4tson442/AMU-virtualmachine) which has both
+2. Run Main Script
+   ```sh
+   source start.sh
+   ```
+3. Visit the site! (🚨 The site URL should end with /front)
 
-Gmail      |  Calendar
-:-------------------:|:-------------------------:
- ![alt text](https://github.com/w4tson442/Fun-Google-Playground/blob/main/display_image/Google_Gmail_example.png) | ![alt text](https://github.com/w4tson442/Fun-Google-Playground/blob/main/display_image/Google_Calendar_example.png)
-
- 
----
-
-
-### What Libraries/Instilation You Need:
-1. Apache / MySQL
-2. VM/ or Webserver to host on (ex. [isekai](https://github.com/w4tson442/isekai)
----
-
-### Good To Know Commands
-1. Get Started on the application by going to the start.sh script and run the script by:   
-``` source start.sh ```
-2. Create One Super User(website admin) (Can manually create ONLY one)   
-```source project_env/bin/activate```   
-``` ./manage.py createsuperuser ```   
-``` ./manage.py collectstatic ```   
-``` deactivate ```
-
+## :gear: USEFUL COMMANDS
+1. Create Admin User "I want to check the DB and other settings for Django" (🚨 The site URL should end with /admin)
+   ```sh
+   source project_env/bin/activate
+   ./manage.py createsuperuser
+   ./manage.py collectstatic
+   deactivate
+   ```
 ---
 **original creator:** Justin Ichiro Toyomitsu  
 **email:** ichitsurume@gmail.com
